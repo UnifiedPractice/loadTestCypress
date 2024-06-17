@@ -8,6 +8,10 @@ on:
 jobs:
   run-tests:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: path/to/your/project  # Specifică directorul principal al proiectului tău aici
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -25,7 +29,6 @@ jobs:
         run: |
           NUM_TESTS=$(node calculate-tests.js)
           echo "::set-output name=num_tests::$NUM_TESTS"
-        working-directory: path/to/your/project
 
       - name: Run Cypress tests
         run: |
@@ -35,7 +38,6 @@ jobs:
               echo "Running test $i"
               npx cypress run --spec "cypress/e2e/Tests/test$i.spec.js"
           done
-        working-directory: path/to/your/project
 
       - name: Upload test results
         if: ${{ always() }}
@@ -43,4 +45,3 @@ jobs:
         with:
           name: test-results
           path: cypress/videos
-        working-directory: path/to/your/project
