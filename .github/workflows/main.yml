@@ -16,31 +16,7 @@ jobs:
       - name: Read CSV and generate job matrix
         id: set-matrix
         run: |
-          links=$(awk -F, 'NR>1 {print $1}' links.csv | jq -R -s -c 'split("\n")[:-1]')
-          echo "::set-output name=matrix::{\"link\":$links}"
-
-  run-tests:
-    needs: generate-jobs
-    runs-on: windows-latest
-    strategy:
-      matrix: ${{ fromJson(needs.generate-jobs.outputs.matrix) }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          persist-credentials: false
-      - name: Configure git
-        run: git config --global url."https://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@github.com/".insteadOf https://github.com/
-      - name: Set CYPRESS_BASE_URL
-        run: echo "CYPRESS_BASE_URL=${{ matrix.link }}" >> $GITHUB_ENV
-      - name: Run Cypress tests for Calendar
-        uses: cypress-io/github-action@v6
-        with:
-          browser: electron
-          record: true
-          parallel: true
-          group: 'Load Tests'
-          spec: 'cypress/e2e/Tests/**'
-        env:
-          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          if [ -f fixtures/links.csv ]; then
+            links=$(awk -F, 'NR>1 {print $1}' fixtures/links.csv | jq -R -s -c 'split("\n")[:-1]')
+            echo "Matrix: $links"
+            echo ":
