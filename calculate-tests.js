@@ -1,7 +1,7 @@
 const fs = require('fs');
 const csv = require('csv-parser');
 
-const csvFilePath = 'C:/Users/Alex/Desktop/loadTests/loadTestCypress/cypress/fixtures/links.csv'; // Actualizează calea completă către fișierul links.csv
+const csvFilePath = 'fixtures/links.csv'; // Actualizează calea relativă către fișierul links.csv
 
 let numTests = 0;
 
@@ -11,8 +11,9 @@ fs.createReadStream(csvFilePath)
         numTests++;
     })
     .on('end', () => {
-        console.log(`Număr de teste necesare: ${numTests}`);
+        console.log(numTests); // Returnează doar numărul de teste necesare
     })
     .on('error', (err) => {
         console.error('Eroare la citirea fișierului CSV:', err);
+        process.exit(1); // Ieși cu cod de eroare în caz de eroare
     });
