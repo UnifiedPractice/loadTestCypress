@@ -25,6 +25,12 @@ jobs:
           else
             echo "fixtures directory not found"
           fi
+      - name: Upload links.csv for debugging
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: links.csv
+          path: fixtures/links.csv
       - name: Read CSV and generate job matrix
         id: set-matrix
         run: |
@@ -35,6 +41,7 @@ jobs:
           else
             echo "fixtures/links.csv not found"
             echo "::set-output name=matrix::{}"
+        shell: bash
 
   run-tests:
     needs: generate-jobs
