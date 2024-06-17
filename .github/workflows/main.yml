@@ -13,8 +13,18 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: List files in fixtures
-        run: ls -la fixtures
+      - name: List all files
+        run: |
+          echo "Listing all files in the repository:"
+          ls -R
+      - name: List files in fixtures directory
+        run: |
+          if [ -d fixtures ]; then
+            echo "Listing files in fixtures directory:"
+            ls -la fixtures
+          else
+            echo "fixtures directory not found"
+          fi
       - name: Read CSV and generate job matrix
         id: set-matrix
         run: |
@@ -25,6 +35,7 @@ jobs:
           else
             echo "fixtures/links.csv not found"
             echo "::set-output name=matrix::{}"
+
   run-tests:
     needs: generate-jobs
     runs-on: windows-latest
