@@ -13,6 +13,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: List files in fixtures
+        run: ls -la fixtures
       - name: Read CSV and generate job matrix
         id: set-matrix
         run: |
@@ -21,4 +23,31 @@ jobs:
             echo "Matrix: $links"
             echo "::set-output name=matrix::{\"link\":$links}"
           else
-            echo "
+            echo "fixtures/links.csv not found"
+            echo "::set-output name=matrix::{}"
+  run-tests:
+    needs: generate-jobs
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        link: ${{ fromJson(needs.generate-jobs.outputs.matrix).link }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Configure git
+        run: git config --global url."https://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@github.com/".insteadOf https://github.com/
+      - name: Set CYPRESS_BASE_URL
+        run: echo "CYPRESS_BASE_URL=${{ matrix.link }}" >> $GITHUB_ENV
+      - name: Run Cypress tests for Calendar
+        uses: cypress-io/github-action@v6
+        with:
+          browser: electron
+          record: true
+          parallel: true
+          group: 'Load Tests'
+          spec: 'cypress/e2e/Tests/**'
+        env:
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
