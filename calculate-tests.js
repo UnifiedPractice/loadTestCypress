@@ -1,7 +1,7 @@
 const fs = require('fs');
 const csv = require('csv-parser');
 
-const csvFilePath = 'C:/Users/Alex/Desktop/loadTests/loadTestCypress/cypress/fixtures/links.csv'; // Actualizează calea completă către fișierul links.csv
+const csvFilePath = 'cypress/fixtures/links.csv'; // Actualizează calea completă către fișierul links.csv
 
 let numTests = 0;
 
