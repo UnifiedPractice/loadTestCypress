@@ -1,0 +1,9 @@
+{
+  "baseUrl": "https://staging.unifiedpractice.com",
+  "fixturesFolder": "cypress/fixtures",
+  "integrationFolder": "cypress/e2e",
+  "testFiles": "**/*.cy.js",
+  "video": true,
+  "viewportWidth": 1280,
+  "viewportHeight": 720
+}
