@@ -20,9 +20,15 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Run Cypress tests
+      - name: Calculate number of tests
+        id: calculate-tests
         run: |
           NUM_TESTS=$(node calculate-tests.js)
+          echo "::set-output name=num_tests::$NUM_TESTS"
+
+      - name: Run Cypress tests
+        run: |
+          NUM_TESTS=${{ steps.calculate-tests.outputs.num_tests }}
           
           for ((i=1; i<=$NUM_TESTS; i++)); do
               echo "Running test $i"
