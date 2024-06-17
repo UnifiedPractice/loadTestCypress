@@ -1,7 +1,8 @@
 const fs = require('fs');
+const path = require('path');
 const csv = require('csv-parser');
 
-const csvFilePath = 'fixtures/links.csv'; // Actualizează calea relativă către fișierul links.csv
+const csvFilePath = path.resolve(__dirname, 'fixtures/links.csv'); // Cale absolută către fișierul links.csv
 
 let numTests = 0;
 
