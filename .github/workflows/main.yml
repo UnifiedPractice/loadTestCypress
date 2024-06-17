@@ -19,4 +19,6 @@ jobs:
           if [ -f fixtures/links.csv ]; then
             links=$(awk -F, 'NR>1 {print $1}' fixtures/links.csv | jq -R -s -c 'split("\n")[:-1]')
             echo "Matrix: $links"
-            echo ":
+            echo "::set-output name=matrix::{\"link\":$links}"
+          else
+            echo "
