@@ -4,68 +4,34 @@ on:
     branches: [ main ]
   pull_request:
     branches: [ main ]
-    
-jobs:
-  generate-jobs:
-    runs-on: ubuntu-latest
-    outputs:
-      matrix: ${{ steps.set-matrix.outputs.matrix }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: List all files
-        run: |
-          echo "Listing all files in the repository:"
-          ls -R
-      - name: List files in fixtures directory
-        run: |
-          if [ -d fixtures ]; then
-            echo "Listing files in fixtures directory:"
-            ls -la fixtures
-          else
-            echo "fixtures directory not found"
-          fi
-      - name: Upload links.csv for debugging
-        if: always()
-        uses: actions/upload-artifact@v3
-        with:
-          name: links.csv
-          path: fixtures/links.csv
-      - name: Read CSV and generate job matrix
-        id: set-matrix
-        run: |
-          if [ -f fixtures/links.csv ]; then
-            links=$(awk -F, 'NR>1 {print $1}' fixtures/links.csv | jq -R -s -c 'split("\n")[:-1]')
-            echo "Matrix: $links"
-            echo "::set-output name=matrix::{\"link\":$links}"
-          else
-            echo "fixtures/links.csv not found"
-            echo "::set-output name=matrix::{}"
-        shell: bash
 
+jobs:
   run-tests:
-    needs: generate-jobs
-    runs-on: windows-latest
-    strategy:
-      matrix:
-        link: ${{ fromJson(needs.generate-jobs.outputs.matrix).link }}
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
         with:
-          persist-credentials: false
-      - name: Configure git
-        run: git config --global url."https://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@github.com/".insteadOf https://github.com/
-      - name: Set CYPRESS_BASE_URL
-        run: echo "CYPRESS_BASE_URL=${{ matrix.link }}" >> $GITHUB_ENV
-      - name: Run Cypress tests for Calendar
-        uses: cypress-io/github-action@v6
+          node-version: '14'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run Cypress tests
+        run: |
+          NUM_TESTS=$(node calculate-tests.js)
+          
+          for ((i=1; i<=$NUM_TESTS; i++)); do
+              echo "Running test $i"
+              npx cypress run --spec "cypress/e2e/Tests/test$i.spec.js"
+          done
+
+      - name: Upload test results
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v2
         with:
-          browser: electron
-          record: true
-          parallel: true
-          group: 'Load Tests'
-          spec: 'cypress/e2e/Tests/**'
-        env:
-          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          name: test-results
+          path: cypress/videos
