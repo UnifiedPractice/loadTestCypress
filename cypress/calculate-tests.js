@@ -26,8 +26,8 @@ fs.createReadStream(csvFilePath)
             cy.visit('${link}');
             cy.get('#login-window-form').type('impersonate');
             cy.contains('Login').click();
-            // Adaugă alte aserțiuni specifice testului, dacă este cazul
-            // cy.contains('Dashboard').should('be.visible');
+            cy.contains('Sign in to Unified Practice').should('be.visible');
+
           });
         });
       `;

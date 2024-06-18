@@ -18,7 +18,7 @@ describe('Test Links from CSV', () => {
           cy.get('#login-window-form').type('impersonate');
           cy.contains('Login').click();
 
-          //cy.contains('Dashboard').should('be.visible');
+          cy.contains('Sign in to Unified Practice').should('be.visible');
         }
       });
     });

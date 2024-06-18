@@ -1,11 +1,11 @@
 
-        describe('Test for Link: https://staging.unifiedpractice.com/Public/Account/Login?token=ec3af6b0-d161-4d1a-8bfa-4bba2ce096ed&ignoreTokenExpiryDate=true&redirectToMetabaseDashboard=true', () => {
+        describe('Test for Link: https://staging.unifiedpractice.com/Public/Account/Login?token=ef5d63ad-d7f5-4663-90e3-41bf887583a3&ignoreTokenExpiryDate=true&redirectToMetabaseDashboard=true', () => {
           it('Visits the link and checks login', () => {
-            cy.visit('https://staging.unifiedpractice.com/Public/Account/Login?token=ec3af6b0-d161-4d1a-8bfa-4bba2ce096ed&ignoreTokenExpiryDate=true&redirectToMetabaseDashboard=true');
+            cy.visit('https://staging.unifiedpractice.com/Public/Account/Login?token=ef5d63ad-d7f5-4663-90e3-41bf887583a3&ignoreTokenExpiryDate=true&redirectToMetabaseDashboard=true');
             cy.get('#login-window-form').type('impersonate');
             cy.contains('Login').click();
-            // Adaugă alte aserțiuni specifice testului, dacă este cazul
-            // cy.contains('Dashboard').should('be.visible');
+            cy.contains('Sign in to Unified Practice').should('be.visible');
+
           });
         });
       
