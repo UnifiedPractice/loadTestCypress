@@ -1,48 +1,42 @@
-name: UP Automation Regression
-
+name: UP Load
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
   pull_request:
-    branches: [ main ]
+    branches:
+      - main
 
 jobs:
   run-tests:
     runs-on: windows-latest
-    strategy:
-      matrix:
-        testFile: [
-          'cypress/e2e/tests/test_1.cy.js',
-          'cypress/e2e/tests/test_2.cy.js',
-          'cypress/e2e/tests/test_3.cy.js',
-          'cypress/e2e/tests/test_4.cy.js',
-          'cypress/e2e/tests/test_5.cy.js',
-          'cypress/e2e/tests/test_6.cy.js',
-          'cypress/e2e/tests/test_7.cy.js',
-          'cypress/e2e/tests/test_8.cy.js',
-          'cypress/e2e/tests/test_9.cy.js'
-        ]
+
     steps:
-      - name: Configure git
-        run: git config --global url."https://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@github.com/".insteadOf https://github.com/
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          persist-credentials: false
-      - name: Setup Node.js
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '16'
+          node-version: '14'
+
       - name: Install dependencies
-        run: npm ci
+        run: npm install
+
+      - name: List test files
+        run: |
+          # List all test files in cypress/e2e/tests directory and store them in a variable
+          TEST_FILES=$(find cypress/e2e/tests -type f -name "*.js")
+          echo "Found the following test files:"
+          echo "$TEST_FILES"
+
       - name: Run Cypress tests
-        uses: cypress-io/github-action@v6
-        with:
-          browser: electron
-          record: true
-          parallel: true
-          group: 'Automated Tests'
-          spec: ${{ matrix.testFile }}
+        strategy:
+          matrix:
+            spec: ${{ split(env.TEST_FILES, '\n') }}
+        run: |
+          echo "Running Cypress test: $spec"
+          npx cypress run --spec "$spec" --browser electron --record --parallel --group "Cypress Tests"
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
