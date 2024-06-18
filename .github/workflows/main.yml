@@ -1,4 +1,4 @@
-name: UP LOAD
+name: UP Load
 
 on:
   push:
@@ -26,14 +26,10 @@ jobs:
         run: npm install
 
       - name: Run Cypress tests
-        uses: cypress-io/github-action@v2
-        with:
-          config-file: cypress.config.js
-          browser: electron
-          record: true
-          parallel: true
-          group: 'E2E Tests'
-          spec: 'cypress/e2e/tests/${{ matrix.spec_file }}'
+        run: |
+          for file in cypress/e2e/tests/*.cy.js; do
+            cypress run --spec "$file" --record --parallel --group 'E2E Tests'
+          done
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
