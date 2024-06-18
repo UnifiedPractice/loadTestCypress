@@ -11,14 +11,21 @@ jobs:
     runs-on: windows-latest
     strategy:
       matrix:
-        spec: $(find cypress/e2e/tests -type f -name "*.js")
+        spec:
+          - 'cypress/e2e/tests/test_1.cy.js'
+          - 'cypress/e2e/tests/test_2.cy.js'
+          - 'cypress/e2e/tests/test_3.cy.js'
+          - 'cypress/e2e/tests/test_4.cy.js'
+          - 'cypress/e2e/tests/test_5.cy.js'
+          - 'cypress/e2e/tests/test_6.cy.js'
+          - 'cypress/e2e/tests/test_7.cy.js'
+          - 'cypress/e2e/tests/test_8.cy.js'
+          - 'cypress/e2e/tests/test_9.cy.js'
 
     steps:
-      - run: git config --global url."https://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@github.com/".insteadOf https://github.com/
       - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          persist-credentials: false
+        uses: actions/checkout@v2
+      
       - name: Run Cypress tests for Load
         uses: cypress-io/github-action@v6
         with:
