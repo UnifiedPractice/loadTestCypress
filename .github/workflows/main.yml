@@ -1,4 +1,5 @@
 name: Load test
+
 on:
   push:
     branches: [ main ]
@@ -11,7 +12,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        spec_file: [ 'test_1.cy.js', 'test_2.cy.js', 'test_3.cy.js', 'test_4.cy.js', 'test_5.cy.js', 'test_6.cy.js', 'test_7.cy.js', 'test_8.cy.js', 'test_9.cy.js' ]
+        spec_file: [ 'test_1.cy.js', 'test_2.cy.js', 'test_3.cy.js', 'test_4.cy.js', 'test_5.cy.js', 'test_6.cy.js', 'test_7.cy.js', 'test_8.cy.js', 'test_9.cy.js', 'test_10.cy.js', 'test_11.cy.js', 'test_12.cy.js', 'test_13.cy.js' ]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
