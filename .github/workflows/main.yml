@@ -1,5 +1,4 @@
-name: Load Test
-
+name: Load test
 on:
   push:
     branches: [ main ]
@@ -29,8 +28,12 @@ jobs:
         shell: pwsh
         run: |
           Get-ChildItem -Path cypress/e2e/tests -Filter *.cy.js | ForEach-Object {
-            & "node_modules\.bin\cypress.cmd" run --spec $_.FullName --record --parallel --group 'E2E Tests'
+            & "node_modules\.bin\cypress.cmd" run --spec $_.FullName --record --group 'E2E Tests'
           }
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          osName: 'win32'
+          osVersion: '10.0.20348'
+          browserName: 'Electron'
+          browserVersion: '118.0.5993.159'
