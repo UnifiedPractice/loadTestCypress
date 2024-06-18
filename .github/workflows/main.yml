@@ -1,4 +1,4 @@
-name: UP Load Test
+name: UP Automation Regression
 
 on:
   push:
@@ -12,15 +12,15 @@ jobs:
     strategy:
       matrix:
         testFile: [
-          'cypress/integration/test_1.js',
-          'cypress/integration/test_2.js',
-          'cypress/integration/test_3.js',
-          'cypress/integration/test_4.js',
-          'cypress/integration/test_5.js',
-          'cypress/integration/test_6.js',
-          'cypress/integration/test_7.js',
-          'cypress/integration/test_8.js',
-          'cypress/integration/test_9.js'
+          'cypress/e2e/tests/test_1.cy.js',
+          'cypress/e2e/tests/test_2.cy.js',
+          'cypress/e2e/tests/test_3.cy.js',
+          'cypress/e2e/tests/test_4.cy.js',
+          'cypress/e2e/tests/test_5.cy.js',
+          'cypress/e2e/tests/test_6.cy.js',
+          'cypress/e2e/tests/test_7.cy.js',
+          'cypress/e2e/tests/test_8.cy.js',
+          'cypress/e2e/tests/test_9.cy.js'
         ]
     steps:
       - name: Configure git
@@ -29,13 +29,19 @@ jobs:
         uses: actions/checkout@v4
         with:
           persist-credentials: false
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+      - name: Install dependencies
+        run: npm ci
       - name: Run Cypress tests
         uses: cypress-io/github-action@v6
         with:
           browser: electron
           record: true
           parallel: true
-          group: 'Load Tests'
+          group: 'Automated Tests'
           spec: ${{ matrix.testFile }}
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
