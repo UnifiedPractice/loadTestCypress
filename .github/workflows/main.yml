@@ -1,42 +1,28 @@
-name: UP Load
+name: Load Test
+
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
   pull_request:
-    branches:
-      - main
+    branches: [ main ]
 
 jobs:
-  run-tests:
+  run-load-tests:
     runs-on: windows-latest
-
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
-      - name: Install Node.js
-        uses: actions/setup-node@v2
+      - run: git config --global url."https://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@github.com/".insteadOf https://github.com/
+      - name: Checkout
+        uses: actions/checkout@v4
         with:
-          node-version: '14'
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: List test files
-        run: |
-          # List all test files in cypress/e2e/tests directory and store them in a variable
-          TEST_FILES=$(find cypress/e2e/tests -type f -name "*.js")
-          echo "Found the following test files:"
-          echo "$TEST_FILES"
-
-      - name: Run Cypress tests
-        strategy:
-          matrix:
-            spec: ${{ split(env.TEST_FILES, '\n') }}
-        run: |
-          echo "Running Cypress test: $spec"
-          npx cypress run --spec "$spec" --browser electron --record --parallel --group "Cypress Tests"
+          persist-credentials: false
+      - name: Run Cypress tests for Calendar
+        uses: cypress-io/github-action@v6
+        with:
+          browser: electron
+          record: true
+          parallel: true
+          group: 'Load'
+          spec: 'cypress/e2e/tests/**'
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
