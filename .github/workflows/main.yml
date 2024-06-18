@@ -1,4 +1,4 @@
-name: Load Test
+name: UP Load
 
 on:
   push:
@@ -7,32 +7,31 @@ on:
     branches: [ main ]
 
 jobs:
-  run-load-tests:
+  run-tests:
     runs-on: windows-latest
     strategy:
       matrix:
-        spec:
-          - 'cypress/e2e/tests/test_1.cy.js'
-          - 'cypress/e2e/tests/test_2.cy.js'
-          - 'cypress/e2e/tests/test_3.cy.js'
-          - 'cypress/e2e/tests/test_4.cy.js'
-          - 'cypress/e2e/tests/test_5.cy.js'
-          - 'cypress/e2e/tests/test_6.cy.js'
-          - 'cypress/e2e/tests/test_7.cy.js'
-          - 'cypress/e2e/tests/test_8.cy.js'
-          - 'cypress/e2e/tests/test_9.cy.js'
-
+        spec_file: $(find cypress/e2e/tests -name "*.cy.js" -exec basename {} \;)
     steps:
       - name: Checkout
         uses: actions/checkout@v2
       
-      - name: Set up Cypress
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+      
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run Cypress test
         uses: cypress-io/github-action@v2
         with:
-          start: 'npm start'  # Modifică cu comanda necesară pentru a porni aplicația ta
-      
-      - name: Run Cypress tests for Load
-        run: npx cypress run --spec "${{ matrix.spec }}" --record --parallel --group 'Load'
+          browser: electron
+          record: true
+          parallel: true
+          group: 'E2E Tests'
+          spec: 'cypress/e2e/tests/${{ matrix.spec_file }}'
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
