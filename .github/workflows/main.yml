@@ -1,4 +1,4 @@
-name: UP Load
+name: UP LOAD
 
 on:
   push:
@@ -10,18 +10,9 @@ jobs:
   run-tests:
     runs-on: windows-latest
     strategy:
+      fail-fast: false
       matrix:
-        spec_file:
-          - test_1.cy.js
-          - test_2.cy.js
-          - test_3.cy.js
-          - test_4.cy.js
-          - test_5.cy.js
-          - test_6.cy.js
-          - test_7.cy.js
-          - test_8.cy.js
-          - test_9.cy.js
-
+        spec_file: [ 'test_1.cy.js', 'test_2.cy.js', 'test_3.cy.js', 'test_4.cy.js', 'test_5.cy.js', 'test_6.cy.js', 'test_7.cy.js', 'test_8.cy.js', 'test_9.cy.js' ]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -34,9 +25,10 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Run Cypress test
+      - name: Run Cypress tests
         uses: cypress-io/github-action@v2
         with:
+          config-file: cypress.config.js
           browser: electron
           record: true
           parallel: true
