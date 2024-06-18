@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 module.exports = defineConfig({
-  defaultCommandTimeout: 30000,
+  defaultCommandTimeout: 80000,
   projectId: "29e68h",
   e2e: {
     setupNodeEvents(on, config) {

@@ -2,12 +2,9 @@ const fs = require('fs');
 const path = require('path');
 const csvParser = require('csv-parser');
 
-// Calea către directorul unde vor fi create fișierele de test
 const testsFolder = path.join('cypress/e2e/tests');
-// Calea către fișierul CSV cu linkuri
 const csvFilePath = path.join('cypress/fixtures/links.csv');
 
-// Asigură-te că directorul pentru teste există
 if (!fs.existsSync(testsFolder)) {
     fs.mkdirSync(testsFolder, { recursive: true });
 }
@@ -26,8 +23,7 @@ fs.createReadStream(csvFilePath)
             cy.visit('${link}');
             cy.get('#login-window-form').type('impersonate');
             cy.contains('Login').click();
-            cy.contains('Sign in to Unified Practice').should('be.visible');
-
+            cy.contains('Dashboard').should('be.visible');
           });
         });
       `;
