@@ -26,14 +26,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       
-      - name: Run Cypress tests for Load
-        uses: cypress-io/github-action@v6
+      - name: Set up Cypress
+        uses: cypress-io/github-action@v2
         with:
-          browser: electron
-          record: true
-          parallel: true
-          group: 'Load'
-          spec: ${{ matrix.spec }}
+          start: 'npm start'  # Modifică cu comanda necesară pentru a porni aplicația ta
+      
+      - name: Run Cypress tests for Load
+        run: npx cypress run --spec "${{ matrix.spec }}" --record --parallel --group 'Load'
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
