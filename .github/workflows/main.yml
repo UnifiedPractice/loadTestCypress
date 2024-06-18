@@ -28,7 +28,7 @@ jobs:
         shell: pwsh
         run: |
           Get-ChildItem -Path cypress/e2e/tests -Filter *.cy.js | ForEach-Object {
-            & "node_modules\.bin\cypress.cmd" run --spec $_.FullName --record --group 'E2E Tests'
+            & "node_modules\.bin\cypress.cmd" run --spec $_.FullName --record --group "E2E Tests - $($_.BaseName)"
           }
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
