@@ -11,16 +11,26 @@ jobs:
     runs-on: windows-latest
     strategy:
       matrix:
-        spec_file: $(find cypress/e2e/tests -name "*.cy.js" -exec basename {} \;)
+        spec_file:
+          - test_1.cy.js
+          - test_2.cy.js
+          - test_3.cy.js
+          - test_4.cy.js
+          - test_5.cy.js
+          - test_6.cy.js
+          - test_7.cy.js
+          - test_8.cy.js
+          - test_9.cy.js
+
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      
+
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
           node-version: '14'
-      
+
       - name: Install dependencies
         run: npm install
 
