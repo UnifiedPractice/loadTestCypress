@@ -1,4 +1,4 @@
-name: UP Load
+name: Load Test
 
 on:
   push:
@@ -26,10 +26,11 @@ jobs:
         run: npm install
 
       - name: Run Cypress tests
+        shell: pwsh
         run: |
-          for file in cypress/e2e/tests/*.cy.js; do
-            cypress run --spec "$file" --record --parallel --group 'E2E Tests'
-          done
+          Get-ChildItem -Path cypress/e2e/tests -Filter *.cy.js | ForEach-Object {
+            cypress run --spec $_.FullName --record --parallel --group 'E2E Tests'
+          }
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
