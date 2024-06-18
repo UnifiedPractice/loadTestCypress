@@ -32,7 +32,7 @@ fs.createReadStream(csvFilePath)
         });
       `;
 
-            const testFileName = `test_${index}.js`;
+            const testFileName = `test_${index}.cy.js`;
             const testFilePath = path.join(testsFolder, testFileName);
 
             fs.writeFileSync(testFilePath, testContent);
