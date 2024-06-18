@@ -3,7 +3,7 @@ const path = require('path');
 const csvParser = require('csv-parser');
 
 // Calea către directorul unde vor fi create fișierele de test
-const testsFolder = path.join('cypress/integration');
+const testsFolder = path.join('cypress/e2e/tests');
 // Calea către fișierul CSV cu linkuri
 const csvFilePath = path.join('cypress/fixtures/links.csv');
 
