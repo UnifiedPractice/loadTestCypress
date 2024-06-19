@@ -1,4 +1,4 @@
-name: Load test
+name: Load Test 108 tests
 
 on:
   push:
@@ -12,7 +12,19 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        spec_file: [ 'test_1.cy.js', 'test_2.cy.js', 'test_3.cy.js', 'test_4.cy.js', 'test_5.cy.js', 'test_6.cy.js', 'test_7.cy.js', 'test_8.cy.js', 'test_9.cy.js', 'test_10.cy.js', 'test_11.cy.js', 'test_12.cy.js', 'test_13.cy.js', 'test_14.cy.js', 'test_15.cy.js', 'test_16.cy.js', 'test_17.cy.js', 'test_18.cy.js', 'test_19.cy.js', 'test_20.cy.js', 'test_21.cy.js', 'test_22.cy.js', 'test_23.cy.js', 'test_24.cy.js', 'test_25.cy.js', 'test_26.cy.js', 'test_27.cy.js', 'test_28.cy.js', 'test_29.cy.js', 'test_30.cy.js', 'test_31.cy.js', 'test_32.cy.js', 'test_33.cy.js', 'test_34.cy.js', 'test_35.cy.js', 'test_36.cy.js', 'test_37.cy.js', 'test_38.cy.js', 'test_39.cy.js', 'test_40.cy.js', 'test_41.cy.js', 'test_42.cy.js', 'test_43.cy.js', 'test_44.cy.js', 'test_45.cy.js' ]
+        spec_file: [
+          'test_1.cy.js', 'test_2.cy.js', 'test_3.cy.js', 'test_4.cy.js', 'test_5.cy.js', 'test_6.cy.js', 'test_7.cy.js', 'test_8.cy.js', 'test_9.cy.js', 'test_10.cy.js',
+          'test_11.cy.js', 'test_12.cy.js', 'test_13.cy.js', 'test_14.cy.js', 'test_15.cy.js', 'test_16.cy.js', 'test_17.cy.js', 'test_18.cy.js', 'test_19.cy.js', 'test_20.cy.js',
+          'test_21.cy.js', 'test_22.cy.js', 'test_23.cy.js', 'test_24.cy.js', 'test_25.cy.js', 'test_26.cy.js', 'test_27.cy.js', 'test_28.cy.js', 'test_29.cy.js', 'test_30.cy.js',
+          'test_31.cy.js', 'test_32.cy.js', 'test_33.cy.js', 'test_34.cy.js', 'test_35.cy.js', 'test_36.cy.js', 'test_37.cy.js', 'test_38.cy.js', 'test_39.cy.js', 'test_40.cy.js',
+          'test_41.cy.js', 'test_42.cy.js', 'test_43.cy.js', 'test_44.cy.js', 'test_45.cy.js', 'test_46.cy.js', 'test_47.cy.js', 'test_48.cy.js', 'test_49.cy.js', 'test_50.cy.js',
+          'test_51.cy.js', 'test_52.cy.js', 'test_53.cy.js', 'test_54.cy.js', 'test_55.cy.js', 'test_56.cy.js', 'test_57.cy.js', 'test_58.cy.js', 'test_59.cy.js', 'test_60.cy.js',
+          'test_61.cy.js', 'test_62.cy.js', 'test_63.cy.js', 'test_64.cy.js', 'test_65.cy.js', 'test_66.cy.js', 'test_67.cy.js', 'test_68.cy.js', 'test_69.cy.js', 'test_70.cy.js',
+          'test_71.cy.js', 'test_72.cy.js', 'test_73.cy.js', 'test_74.cy.js', 'test_75.cy.js', 'test_76.cy.js', 'test_77.cy.js', 'test_78.cy.js', 'test_79.cy.js', 'test_80.cy.js',
+          'test_81.cy.js', 'test_82.cy.js', 'test_83.cy.js', 'test_84.cy.js', 'test_85.cy.js', 'test_86.cy.js', 'test_87.cy.js', 'test_88.cy.js', 'test_89.cy.js', 'test_90.cy.js',
+          'test_91.cy.js', 'test_92.cy.js', 'test_93.cy.js', 'test_94.cy.js', 'test_95.cy.js', 'test_96.cy.js', 'test_97.cy.js', 'test_98.cy.js', 'test_99.cy.js', 'test_100.cy.js',
+          'test_101.cy.js', 'test_102.cy.js', 'test_103.cy.js', 'test_104.cy.js', 'test_105.cy.js', 'test_106.cy.js', 'test_107.cy.js', 'test_108.cy.js'
+        ]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
