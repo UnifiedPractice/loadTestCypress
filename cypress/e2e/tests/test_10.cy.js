@@ -1,7 +1,7 @@
 
-        describe('Test for Link: https://staging.unifiedpractice.com/Public/Account/Login?token=88990cf8-3920-4dcb-bba7-ac2700032479&ignoreTokenExpiryDate=true&redirectToMetabaseDashboard=true', () => {
+        describe('Test for Link: https://staging.unifiedpractice.com/Public/Account/Login?token=7129068a-86dc-485b-bc18-3144d3cdf028&ignoreTokenExpiryDate=true&redirectToMetabaseDashboard=true', () => {
           it('Visits the link and checks login', () => {
-            cy.visit('https://staging.unifiedpractice.com/Public/Account/Login?token=88990cf8-3920-4dcb-bba7-ac2700032479&ignoreTokenExpiryDate=true&redirectToMetabaseDashboard=true');
+            cy.visit('https://staging.unifiedpractice.com/Public/Account/Login?token=7129068a-86dc-485b-bc18-3144d3cdf028&ignoreTokenExpiryDate=true&redirectToMetabaseDashboard=true');
             cy.get('#login-window-form').type('impersonate');
             cy.contains('Login').click();
             cy.contains('Dashboard').should('be.visible');
